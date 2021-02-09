@@ -1,0 +1,20 @@
+---
+title: "`r here::here()`"
+author: "Joe Despres"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+urlcolor: blue
+output:
+  prettydoc::html_pretty:
+    theme: cayman
+    highlight: github
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message = FALSE) 
+tuesdata <- tidytuesdayR::tt_load(2021, week = 7)
+library(tidyverse); thematic::thematic_on()
+```
+
+# Wealth and income over time
+
