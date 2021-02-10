@@ -50,7 +50,7 @@ years <- retirement %>%
 p2 <- retirement %>% 
   ggplot(aes(year, retirement, color = race)) + 
   geom_smooth(se = FALSE) + 
-  labs(title = "Differences in Retirement Savings Have Gone Up Exponentially Over the Years",
+  labs(title = "Differences in Retirement Savings Have Increased",
          subtitle = paste0(years$year, collapse = " "),
        y = "Retirement Savings", 
        x = "Year")
@@ -76,7 +76,7 @@ p3 <- income_limits %>%
 
 ```{r}
 final <- (p1 + p2)/ p3
-ggsave(here::here("Pics", "2020-02-09.png"), width = 20, height = 10)
+ggsave(here::here("Pics", "2020-02-09.png"), width = 15, height = 7)
 final
 ```
 
