@@ -58,7 +58,11 @@ p2 <- retirement %>%
 
 ```{r}
 income_limits  <- tuesdata$income_limits 
-
+income_limits %>% 
+  filter(year == 2016, race == "All Races") %>% 
+  summarise(max = max(income_dollars))
+  
+  
 p3 <- income_limits %>% 
   filter(year > 2015) %>% 
   mutate(income_dollars = income_dollars / 1000) %>% 
@@ -72,8 +76,11 @@ p3 <- income_limits %>%
 
 ```{r}
 final <- (p1 + p2)/ p3
+ggsave(here::here("Pics", "2020-02-09.png"), width = 20, height = 10)
 final
 ```
+
+
 
 
 
