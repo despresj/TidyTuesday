@@ -14,7 +14,66 @@ output:
 knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message = FALSE) 
 tuesdata <- tidytuesdayR::tt_load(2021, week = 7)
 library(tidyverse); thematic::thematic_on()
+library(patchwork)
 ```
 
 # Wealth and income over time
+
+```{r}
+lapply(tuesdata, names)
+lapply(tuesdata, glimpse)
+```
+
+
+```{r}
+lifetime_earn <- tuesdata$lifetime_earn
+```
+
+```{r}
+p1 <- lifetime_earn %>% 
+  mutate(lifetime_earn = lifetime_earn / 1000) %>% 
+  ggplot(aes(fct_reorder(race, lifetime_earn), lifetime_earn, fill = gender)) + 
+  geom_col(position = "dodge") + 
+  labs(title = "Note the difference in lifetime Earnings for men and women", 
+       x = "Race and Gender",
+       y = "Lifetime Earnings in thousands of USD")
+```
+
+Are we going to find similar patterns in other data? Perhaps this affects retirement
+```{r}
+retirement <- tuesdata$retirement
+
+years <- retirement %>% 
+  group_by(year) %>% 
+  summarise()
+
+p2 <- retirement %>% 
+  ggplot(aes(year, retirement, color = race)) + 
+  geom_smooth(se = FALSE) + 
+  labs(title = "Differences in Retirement Savings Have Gone Up Exponentially Over the Years",
+         subtitle = paste0(years$year, collapse = " "),
+       y = "Retirement Savings", 
+       x = "Year")
+```
+
+```{r}
+income_limits  <- tuesdata$income_limits 
+
+p3 <- income_limits %>% 
+  filter(year > 2015) %>% 
+  mutate(income_dollars = income_dollars / 1000) %>% 
+  ggplot(aes(x = fct_reorder(income_quintile, income_dollars), y = income_dollars, fill = income_quintile)) + 
+  geom_col(position = "dodge") + 
+  facet_wrap(~ year, nrow = 1) + 
+  labs(title = "Top 5% threshold has grown by about $50k Since 2016",
+       y = "Income Threshold ",
+       x = "") 
+```
+
+```{r}
+final <- (p1 + p2)/ p3
+final
+```
+
+
 
